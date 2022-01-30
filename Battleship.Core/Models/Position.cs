@@ -1,17 +1,14 @@
 ﻿using System;
 
-namespace Battleship.Core
+namespace Battleship.Core.Models
 {
-    public class Position
+    public sealed class Position
     {
-        public int X { get; set; }
-        public int Y { get; set; }
+        private static readonly Random _random = new();
 
-        public override string ToString()
-        {
-            const string columns = "ABCDEFGHIJ";
-            return columns[X] + Y.ToString();
-        }
+        public int X { get; set; }
+
+        public int Y { get; set; }
 
         public Position(int x, int y)
         {
@@ -21,6 +18,20 @@ namespace Battleship.Core
 
             Y = y;
             X = x;
+        }
+
+        public static Position MakeRandomPosition()
+        {
+            var x = _random.Next(GameConstraint.BoardSize);
+            var y = _random.Next(GameConstraint.BoardSize);
+            var position = new Position(x, y);
+            return position;
+        }
+
+        public override string ToString()
+        {
+            const string columns = "ABCDEFGHIJ";
+            return columns[X] + Y.ToString();
         }
 
         protected bool Equals(Position other)

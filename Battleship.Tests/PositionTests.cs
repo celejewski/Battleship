@@ -1,5 +1,6 @@
 ﻿using Battleship.Core;
 using System;
+using Battleship.Core.Models;
 using Xunit;
 
 namespace Battleship.Tests

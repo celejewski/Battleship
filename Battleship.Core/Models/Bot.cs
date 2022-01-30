@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Battleship.Core.Enums;
+using System;
 using System.Collections.Generic;
 
-namespace Battleship.Core
+namespace Battleship.Core.Models
 {
-    public class Bot
+    public sealed class Bot
     {
         private static readonly Random _random = new();
         private readonly HashSet<Position> _positions = new();
@@ -36,7 +37,7 @@ namespace Battleship.Core
             Position position;
             do
             {
-                position = MakeRandomPosition();
+                position = Position.MakeRandomPosition();
             } while (!_positions.Add(position));
 
             return position;
@@ -57,7 +58,7 @@ namespace Battleship.Core
             {
                 var orientation = _random.Next(2) == 1 ? Orientation.Horizontal : Orientation.Vertical;
                 var ship = Ship.MakeShip(classOfShip, orientation);
-                var position = MakeRandomPosition();
+                var position = Position.MakeRandomPosition();
 
                 if (!board.CanAddShip(ship, position)) continue;
                 board.AddShip(ship, position);
@@ -65,14 +66,6 @@ namespace Battleship.Core
             }
 
             throw new InvalidOperationException();
-        }
-
-        private static Position MakeRandomPosition()
-        {
-            var x = _random.Next(GameConstraint.BoardSize);
-            var y = _random.Next(GameConstraint.BoardSize);
-            var position = new Position(x, y);
-            return position;
         }
     }
 }

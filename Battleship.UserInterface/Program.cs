@@ -1,4 +1,7 @@
 ﻿using Battleship.Core;
+using Battleship.Core.Dtos;
+using Battleship.Core.Enums;
+using Battleship.Core.Models;
 using System;
 using System.Threading;
 

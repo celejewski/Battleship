@@ -1,6 +1,9 @@
-﻿namespace Battleship.Core
+﻿using Battleship.Core.Enums;
+using System;
+
+namespace Battleship.Core.Models
 {
-    public class Ship
+    public sealed class Ship
     {
         public ClassOfShip ClassOfShip { get; }
         public int Size { get; }
@@ -22,6 +25,7 @@
                 ClassOfShip.Cruiser => new Ship(ClassOfShip.Cruiser, 3, orientation),
                 ClassOfShip.Submarine => new Ship(ClassOfShip.Submarine, 3, orientation),
                 ClassOfShip.Destroyer => new Ship(ClassOfShip.Destroyer, 2, orientation),
+                _ => throw new ArgumentException(nameof(classOfShip))
             };
             return ship;
         }

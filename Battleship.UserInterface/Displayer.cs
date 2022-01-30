@@ -1,4 +1,7 @@
 ﻿using Battleship.Core;
+using Battleship.Core.Dtos;
+using Battleship.Core.Enums;
+using Battleship.Core.Models;
 using System;
 
 namespace Battleship.UserInterface
@@ -12,8 +15,8 @@ namespace Battleship.UserInterface
 
         public void Show(GameState gameState)
         {
-            ShowBoard(0, gameState.BoardLeft);
-            ShowBoard(30, gameState.BoardRight);
+            ShowBoard(0, gameState.LeftBoard);
+            ShowBoard(30, gameState.RightBoard);
         }
 
         private static void ShowBoard(int offset, Board board)

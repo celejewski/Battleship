@@ -1,4 +1,4 @@
-﻿namespace Battleship.Core
+﻿namespace Battleship.Core.Enums
 {
     public enum Orientation
     {

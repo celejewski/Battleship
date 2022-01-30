@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Battleship.Core.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Battleship.Core
+namespace Battleship.Core.Models
 {
-    public class Board
+    public sealed class Board
     {
         private readonly Field[,] _fields = new Field[10, 10];
 
@@ -55,19 +56,19 @@ namespace Battleship.Core
             }
         }
 
+        private bool FieldIsShip(int x, int y)
+        {
+            var isIndexOutOfRange = x < 0
+                                    || x >= GameConstraint.BoardSize
+                                    || y < 0
+                                    || y >= GameConstraint.BoardSize;
+
+            if (isIndexOutOfRange) return false;
+            return _fields[x, y] == Field.Ship;
+        }
+
         private bool CanAddShipOnField(int x, int y)
         {
-            bool FieldIsShip(int x, int y)
-            {
-                var isIndexOutOfRange = x < 0
-                                        || x >= GameConstraint.BoardSize
-                                        || y < 0
-                                        || y >= GameConstraint.BoardSize;
-
-                if (isIndexOutOfRange) return false;
-                return _fields[x, y] == Field.Ship;
-            }
-
             return FieldIsShip(x - 1, y - 1)
                    || FieldIsShip(x - 1, y + 0)
                    || FieldIsShip(x - 1, y + 1)

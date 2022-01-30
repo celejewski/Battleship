@@ -2,6 +2,8 @@ using Battleship.Core;
 using FluentAssertions;
 using Microsoft.VisualBasic.CompilerServices;
 using System;
+using Battleship.Core.Enums;
+using Battleship.Core.Models;
 using Xunit;
 
 namespace Battleship.Tests
