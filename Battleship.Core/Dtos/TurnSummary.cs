@@ -2,5 +2,8 @@
 
 namespace Battleship.Core.Dtos
 {
-    public record TurnSummary(PlayerAction LeftPlayerAction, PlayerAction RightPlayerAction, MatchStatus MatchStatus);
+    public record TurnSummary(
+        PlayerActionSummary LeftPlayerActionSummary,
+        PlayerActionSummary RightPlayerActionSummary,
+        MatchStatus MatchStatus);
 }

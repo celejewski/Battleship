@@ -3,6 +3,9 @@ using System;
 
 namespace Battleship.Core.Models
 {
+    /// <summary>
+    /// Represent single ship to be placed on board.
+    /// </summary>
     public sealed class Ship
     {
         public ClassOfShip ClassOfShip { get; }

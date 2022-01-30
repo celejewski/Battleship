@@ -9,6 +9,10 @@ namespace Battleship.Core.Models
         private static readonly Random _random = new();
         private readonly HashSet<Position> _positions = new();
 
+        /// <summary>
+        /// Makes starting board by randomly placing all the ships.
+        /// </summary>
+        /// <returns></returns>
         public Board MakeStartingBoard()
         {
             var board = new Board();
@@ -30,6 +34,11 @@ namespace Battleship.Core.Models
             }
         }
 
+
+        /// <summary>
+        /// Returns random position to fire at. Does shoot each position at most once.
+        /// </summary>
+        /// <returns></returns>
         public Position GetPositionToFireAt()
         {
             if (_positions.Count == GameConstraint.BoardSize * GameConstraint.BoardSize) throw new InvalidOperationException();
@@ -43,6 +52,11 @@ namespace Battleship.Core.Models
             return position;
         }
 
+        /// <summary>
+        /// Helper to place all ships of given category.
+        /// </summary>
+        /// <param name="board"></param>
+        /// <param name="classOfShip"></param>
         private void PlaceShips(Board board, ClassOfShip classOfShip)
         {
             while (board.ShipsToAddCount[classOfShip] > 0)
@@ -51,6 +65,11 @@ namespace Battleship.Core.Models
             }
         }
 
+        /// <summary>
+        /// Tries to place ship of given ship. If retries fails multiple times it will throw exception beacuse it is very likely that board is in state in which it is impossible to place ship.
+        /// </summary>
+        /// <param name="board"></param>
+        /// <param name="classOfShip"></param>
         private static void PlaceShip(Board board, ClassOfShip classOfShip)
         {
             var retriesLimit = 100;
@@ -65,7 +84,8 @@ namespace Battleship.Core.Models
                 return;
             }
 
-            throw new InvalidOperationException();
+            var message = "Placing ship failed, it is very likely that board is in state where ship can not be added";
+            throw new InvalidOperationException(message);
         }
     }
 }

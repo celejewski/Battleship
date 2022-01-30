@@ -18,6 +18,10 @@ namespace Battleship.Core.Models
             GameState = new GameState(leftBoard, rightBoard);
         }
 
+        /// <summary>
+        /// Performs game turn.
+        /// </summary>
+        /// <returns>Summary of what happened during this turn</returns>
         public TurnSummary Turn()
         {
             var leftPlayerAction = PlayerAction(Player.Left);
@@ -27,6 +31,7 @@ namespace Battleship.Core.Models
             var turnSummary = new TurnSummary(leftPlayerAction, rightPlayerAction, matchStatus);
             return turnSummary;
         }
+
 
         private MatchStatus GetMatchStatus()
         {
@@ -40,7 +45,12 @@ namespace Battleship.Core.Models
             return MatchStatus.Running;
         }
 
-        private PlayerAction PlayerAction(Player player)
+        /// <summary>
+        /// Get position to fire at and create player summary.
+        /// </summary>
+        /// <param name="player"></param>
+        /// <returns></returns>
+        private PlayerActionSummary PlayerAction(Player player)
         {
             var position = player == Player.Left
                 ? _leftBot.GetPositionToFireAt()
@@ -52,7 +62,7 @@ namespace Battleship.Core.Models
                 ? Outcome.Miss
                 : Outcome.Hit;
 
-            var playerAction = new PlayerAction(player, position, outcome);
+            var playerAction = new PlayerActionSummary(player, position, outcome);
             return playerAction;
         }
     }
