@@ -1,10 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Battleship.Core
 {
     public class Board
     {
         private readonly Field[,] _fields = new Field[10, 10];
+
+        private readonly Dictionary<ClassOfShip, int> _shipsToAddCount = new()
+        {
+            {ClassOfShip.Carrier, GameConstraint.CarriersCount},
+            {ClassOfShip.Battleship, GameConstraint.BattleshipsCount},
+            {ClassOfShip.Cruiser, GameConstraint.CruisersCount},
+            {ClassOfShip.Submarine, GameConstraint.SubmarinesCount},
+            {ClassOfShip.Destroyer, GameConstraint.DestroyersCount},
+        };
+
+        public IReadOnlyDictionary<ClassOfShip, int> ShipsToAddCount => _shipsToAddCount;
 
         /// <summary>
         /// Checks if ship can be added to board.
@@ -69,6 +81,7 @@ namespace Battleship.Core
 
         public void AddShip(Ship ship, Position position)
         {
+            if (_shipsToAddCount[ship.ClassOfShip] == 0) throw new InvalidOperationException();
             if (!CanAddShip(ship, position)) throw new InvalidOperationException();
 
             for (int i = 0; i < ship.Size; i++)
@@ -82,8 +95,27 @@ namespace Battleship.Core
                     _fields[position.X, position.Y + i] = Field.Ship;
                 }
             }
+
+            _shipsToAddCount[ship.ClassOfShip]--;
         }
 
         public Field GetField(int x, int y) => _fields[x, y];
+
+        public void Reset()
+        {
+            _shipsToAddCount[ClassOfShip.Carrier] = GameConstraint.CarriersCount;
+            _shipsToAddCount[ClassOfShip.Battleship] = GameConstraint.BattleshipsCount;
+            _shipsToAddCount[ClassOfShip.Cruiser] = GameConstraint.CruisersCount;
+            _shipsToAddCount[ClassOfShip.Submarine] = GameConstraint.SubmarinesCount;
+            _shipsToAddCount[ClassOfShip.Destroyer] = GameConstraint.DestroyersCount;
+
+            for (int x = 0; x < GameConstraint.BoardSize; x++)
+            {
+                for (int y = 0; y < GameConstraint.BoardSize; y++)
+                {
+                    _fields[x, y] = Field.Water;
+                }
+            }
+        }
     }
 }

@@ -129,5 +129,16 @@ namespace Battleship.Tests
 
             sut.Should().BeFalse();
         }
+
+        [Fact]
+        public void AddShip_should_throw_exception_when_too_many_carriers_are_added()
+        {
+            var board = new Board();
+            var ship = Ship.MakeShip(ClassOfShip.Carrier, Orientation.Horizontal);
+            board.AddShip(ship, new Position(0, 0));
+
+            Action act = () => board.AddShip(ship, new Position(2, 0));
+            act.Should().Throw<InvalidOperationException>();
+        }
     }
 }
