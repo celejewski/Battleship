@@ -32,21 +32,36 @@ namespace Battleship.UserInterface
                 {
                     Console.SetCursorPosition(offset + 4 + i, 3 + j);
                     var field = board.GetField(i, j);
-                    var character = FieldToCharacter(field);
-                    Console.Write(character);
+                    WriteField(field);
                 }
             }
         }
 
-        private static char FieldToCharacter(Field field)
+        private static void WriteField(Field field)
         {
-            return field switch
+            Console.ForegroundColor = field switch
+            {
+                Field.Miss => ConsoleColor.White,
+                _ => ConsoleColor.Black,
+            };
+
+            Console.BackgroundColor = field switch
+            {
+                Field.Ship => ConsoleColor.White,
+                Field.Hit => ConsoleColor.DarkGray,
+                _ => ConsoleColor.Blue
+            };
+
+            var character = field switch
             {
                 Field.Hit => 'X',
                 Field.Miss => 'o',
-                Field.Ship => '#',
-                Field.Water => ' '
+                _ => ' '
             };
+
+            Console.Write(character);
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.BackgroundColor = ConsoleColor.Black;
         }
 
         private static void WriteBorder(int offset)
