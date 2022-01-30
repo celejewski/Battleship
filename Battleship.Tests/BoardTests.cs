@@ -1,5 +1,6 @@
 using Battleship.Core;
 using FluentAssertions;
+using Microsoft.VisualBasic.CompilerServices;
 using System;
 using Xunit;
 
@@ -100,6 +101,32 @@ namespace Battleship.Tests
             var position = new Position(5, 0);
 
             var sut = board.CanAddShip(newShip, position);
+            sut.Should().BeFalse();
+        }
+
+        [Theory]
+        [InlineData(2, 1)]
+        [InlineData(3, 1)]
+        [InlineData(4, 1)]
+        [InlineData(5, 1)]
+        [InlineData(2, 2)]
+        [InlineData(2, 3)]
+        [InlineData(2, 4)]
+        [InlineData(3, 4)]
+        [InlineData(4, 4)]
+        [InlineData(5, 4)]
+        [InlineData(5, 2)]
+        [InlineData(5, 3)]
+        public void CanAddShip_should_return_false_when_new_ship_would_touch_existing_one(int x, int y)
+        {
+            var board = new Board();
+            var existingShip = Ship.MakeShip(ClassOfShip.Destroyer, Orientation.Horizontal);
+            board.AddShip(existingShip, new Position(3, 3));
+            var newShip = Ship.MakeShip(ClassOfShip.Destroyer, Orientation.Vertical);
+            var position = new Position(x, y);
+
+            var sut = board.CanAddShip(newShip, position);
+
             sut.Should().BeFalse();
         }
     }
