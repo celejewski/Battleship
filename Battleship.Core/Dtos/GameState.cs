@@ -2,5 +2,5 @@
 
 namespace Battleship.Core.Dtos
 {
-    public sealed record GameState(Board LeftBoard, Board RightBoard);
+    public sealed record GameState(IBoard LeftBoard, IBoard RightBoard);
 }

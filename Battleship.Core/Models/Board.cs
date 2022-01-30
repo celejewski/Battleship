@@ -6,9 +6,9 @@ using System.Linq;
 namespace Battleship.Core.Models
 {
     /// <summary>
-    /// Board does contain information about board state. 
+    /// Board does contain information about board state.
     /// </summary>
-    public sealed class Board
+    public sealed class Board : IBoard
     {
         private readonly Field[,] _fields = new Field[GameConstraint.BoardSize, GameConstraint.BoardSize];
 
@@ -120,7 +120,7 @@ namespace Battleship.Core.Models
             _shipsToAddCount[ship.ClassOfShip]--;
         }
 
-        public Field GetField(int x, int y) => _fields[x, y];
+        public Field GetField(int x, int y) => GetField(new Position(x, y));
 
         public Field GetField(Position position) => _fields[position.X, position.Y];
 

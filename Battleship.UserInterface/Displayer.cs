@@ -44,7 +44,7 @@ namespace Battleship.UserInterface
             Console.Write(playerActionSummary.Position + ": " + playerActionSummary.Outcome);
         }
 
-        private static void ShowBoard(int offset, Board board)
+        private static void ShowBoard(int offset, IBoard board)
         {
             WriteColumns(offset);
             WriteRows(offset);
@@ -52,7 +52,7 @@ namespace Battleship.UserInterface
             WriteBoard(offset, board);
         }
 
-        private static void WriteBoard(int offset, Board board)
+        private static void WriteBoard(int offset, IBoard board)
         {
             for (int i = 0; i < GameConstraint.BoardSize; i++)
             {

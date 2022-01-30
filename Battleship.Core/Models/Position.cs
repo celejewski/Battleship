@@ -37,7 +37,7 @@ namespace Battleship.Core.Models
             return columns[X] + Y.ToString();
         }
 
-        protected bool Equals(Position other)
+        private bool Equals(Position other)
         {
             return X == other.X && Y == other.Y;
         }

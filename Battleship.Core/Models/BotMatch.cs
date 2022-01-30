@@ -7,15 +7,17 @@ namespace Battleship.Core.Models
     {
         private readonly Bot _leftBot;
         private readonly Bot _rightBot;
+        private readonly Board _leftBoard;
+        private readonly Board _rightBoard;
         public GameState GameState { get; }
 
         public BotMatch()
         {
             _leftBot = new();
             _rightBot = new();
-            var leftBoard = _leftBot.MakeStartingBoard();
-            var rightBoard = _rightBot.MakeStartingBoard();
-            GameState = new GameState(leftBoard, rightBoard);
+            _leftBoard = _leftBot.MakeStartingBoard();
+            _rightBoard = _rightBot.MakeStartingBoard();
+            GameState = new GameState(_leftBoard, _rightBoard);
         }
 
         /// <summary>
@@ -33,10 +35,10 @@ namespace Battleship.Core.Models
         }
 
 
-        private MatchStatus GetMatchStatus()
+        public MatchStatus GetMatchStatus()
         {
-            var leftKilled = GameState.LeftBoard.AreAllShipsSunken();
-            var rightKilled = GameState.RightBoard.AreAllShipsSunken();
+            var leftKilled = _leftBoard.AreAllShipsSunken();
+            var rightKilled = _rightBoard.AreAllShipsSunken();
 
             if (leftKilled && rightKilled) return MatchStatus.Draw;
             if (leftKilled) return MatchStatus.RightWon;
@@ -56,7 +58,7 @@ namespace Battleship.Core.Models
                 ? _leftBot.GetPositionToFireAt()
                 : _rightBot.GetPositionToFireAt();
 
-            var board = player == Player.Left ? GameState.RightBoard : GameState.LeftBoard;
+            var board = player == Player.Left ? _rightBoard : _leftBoard;
             board.Fire(position);
             var outcome = board.GetField(position) == Field.Miss
                 ? Outcome.Miss
