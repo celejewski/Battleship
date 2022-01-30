@@ -10,18 +10,18 @@ namespace Battleship.UserInterface
         {
             var displayer = new Displayer();
             var boardLeft = new Board();
-            boardLeft.Fields[5, 5] = Field.Miss;
-            boardLeft.Fields[5, 6] = Field.Miss;
-            boardLeft.Fields[5, 7] = Field.Miss;
-            boardLeft.Fields[6, 5] = Field.Miss;
-            boardLeft.Fields[7, 5] = Field.Miss;
-            boardLeft.Fields[7, 7] = Field.Hit;
-            boardLeft.Fields[7, 8] = Field.Hit;
-            boardLeft.Fields[0, 0] = Field.Ship;
-            boardLeft.Fields[0, 1] = Field.Ship;
-            boardLeft.Fields[0, 2] = Field.Ship;
-            boardLeft.Fields[0, 3] = Field.Ship;
-            boardLeft.Fields[0, 4] = Field.Ship;
+            //boardLeft.Fields[5, 5] = Field.Miss;
+            //boardLeft.Fields[5, 6] = Field.Miss;
+            //boardLeft.Fields[5, 7] = Field.Miss;
+            //boardLeft.Fields[6, 5] = Field.Miss;
+            //boardLeft.Fields[7, 5] = Field.Miss;
+            //boardLeft.Fields[7, 7] = Field.Hit;
+            //boardLeft.Fields[7, 8] = Field.Hit;
+            //boardLeft.Fields[0, 0] = Field.Ship;
+            //boardLeft.Fields[0, 1] = Field.Ship;
+            //boardLeft.Fields[0, 2] = Field.Ship;
+            //boardLeft.Fields[0, 3] = Field.Ship;
+            //boardLeft.Fields[0, 4] = Field.Ship;
 
             var boardRight = boardLeft;
 

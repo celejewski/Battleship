@@ -1,5 +1,5 @@
-﻿using System;
-using Battleship.Core;
+﻿using Battleship.Core;
+using System;
 
 namespace Battleship.UserInterface
 {
@@ -31,7 +31,7 @@ namespace Battleship.UserInterface
                 for (int j = 0; j < 10; j++)
                 {
                     Console.SetCursorPosition(offset + 4 + i, 3 + j);
-                    var field = board.Fields[i, j];
+                    var field = board.GetField(i, j);
                     var character = FieldToCharacter(field);
                     Console.Write(character);
                 }

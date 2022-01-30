@@ -1,6 +1,6 @@
 ﻿namespace Battleship.Core
 {
-    public class Action
+    public class LogAction
     {
         public GameState GameStateBeforeAction { get; set; }
         public Player Player { get; set; }
