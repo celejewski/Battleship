@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Battleship.Core
 {
@@ -81,8 +82,7 @@ namespace Battleship.Core
 
         public void AddShip(Ship ship, Position position)
         {
-            if (_shipsToAddCount[ship.ClassOfShip] == 0) throw new InvalidOperationException();
-            if (!CanAddShip(ship, position)) throw new InvalidOperationException();
+            EnsureCanAddShip(ship, position);
 
             for (int i = 0; i < ship.Size; i++)
             {
@@ -101,6 +101,8 @@ namespace Battleship.Core
 
         public Field GetField(int x, int y) => _fields[x, y];
 
+        public Field GetField(Position position) => _fields[position.X, position.Y];
+
         public void Reset()
         {
             _shipsToAddCount[ClassOfShip.Carrier] = GameConstraint.CarriersCount;
@@ -116,6 +118,52 @@ namespace Battleship.Core
                     _fields[x, y] = Field.Water;
                 }
             }
+        }
+
+        public void Fire(Position position)
+        {
+            EnsureAllShipsArePlaced();
+
+            if (_fields[position.X, position.Y] == Field.Water)
+            {
+                _fields[position.X, position.Y] = Field.Miss;
+            }
+
+            if (_fields[position.X, position.Y] == Field.Ship)
+            {
+                _fields[position.X, position.Y] = Field.Hit;
+            }
+        }
+
+        public bool AreAllShipsSunken()
+        {
+            EnsureAllShipsArePlaced();
+
+            for (int x = 0; x < GameConstraint.BoardSize; x++)
+            {
+                for (int y = 0; y < GameConstraint.BoardSize; y++)
+                {
+                    if (_fields[x, y] == Field.Ship) return false;
+                }
+            }
+
+            return true;
+        }
+
+        private bool AreAllShipsPlaced()
+        {
+            return _shipsToAddCount.Values.All(v => v == 0);
+        }
+
+        private void EnsureCanAddShip(Ship ship, Position position)
+        {
+            if (_shipsToAddCount[ship.ClassOfShip] == 0) throw new InvalidOperationException();
+            if (!CanAddShip(ship, position)) throw new InvalidOperationException();
+        }
+
+        private void EnsureAllShipsArePlaced()
+        {
+            if (!AreAllShipsPlaced()) throw new InvalidOperationException();
         }
     }
 }

@@ -9,18 +9,19 @@ namespace Battleship.UserInterface
         private static void Main(string[] args)
         {
             var displayer = new Displayer();
-            var bot = new Bot();
-            var boardLeft = bot.MakeStartingBoard();
-
-            var boardRight = bot.MakeStartingBoard();
-
-            var gameState = new GameState
+            var botMatch = new BotMatch();
+            TurnSummary turnSummary;
+            while (true)
             {
-                BoardLeft = boardLeft,
-                BoardRight = boardRight
-            };
-            displayer.Show(gameState);
+                displayer.Show(botMatch.GameState);
+                turnSummary = botMatch.Turn();
+                if (turnSummary.MatchStatus != MatchStatus.Running) break;
+                Thread.Sleep(20);
+            }
 
+            displayer.Show(botMatch.GameState);
+            Console.SetCursorPosition(0, 16);
+            Console.WriteLine(turnSummary.MatchStatus);
             Console.ReadLine();
             return;
 
