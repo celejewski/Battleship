@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Battleship.Core;
+using System;
 using System.Threading;
 
 namespace Battleship.UserInterface

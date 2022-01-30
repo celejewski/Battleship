@@ -1,4 +1,4 @@
-﻿namespace Battleship.UserInterface
+﻿namespace Battleship.Core
 {
     public enum Field
     {
