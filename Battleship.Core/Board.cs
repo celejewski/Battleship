@@ -34,7 +34,7 @@ namespace Battleship.Core
                 {
                     int x = position.X + i;
                     int y = position.Y;
-                    if (IsFieldAShipOrTouchesTheShip(x, y)) return false;
+                    if (CanAddShipOnField(x, y)) return false;
                 }
 
                 return true;
@@ -47,16 +47,16 @@ namespace Battleship.Core
                 {
                     int x = position.X;
                     int y = position.Y + i;
-                    if (IsFieldAShipOrTouchesTheShip(x, y)) return false;
+                    if (CanAddShipOnField(x, y)) return false;
                 }
 
                 return true;
             }
         }
 
-        private bool IsFieldAShipOrTouchesTheShip(int x, int y)
+        private bool CanAddShipOnField(int x, int y)
         {
-            bool IsFieldAShip(int x, int y)
+            bool FieldIsShip(int x, int y)
             {
                 var isIndexOutOfRange = x < 0
                                         || x >= GameConstraint.BoardSize
@@ -67,15 +67,15 @@ namespace Battleship.Core
                 return _fields[x, y] == Field.Ship;
             }
 
-            return IsFieldAShip(x - 1, y - 1)
-                   || IsFieldAShip(x - 1, y + 0)
-                   || IsFieldAShip(x - 1, y + 1)
-                   || IsFieldAShip(x, y - 1)
-                   || IsFieldAShip(x, y + 0)
-                   || IsFieldAShip(x, y + 1)
-                   || IsFieldAShip(x + 1, y - 1)
-                   || IsFieldAShip(x + 1, y + 0)
-                   || IsFieldAShip(x + 1, y + 1);
+            return FieldIsShip(x - 1, y - 1)
+                   || FieldIsShip(x - 1, y + 0)
+                   || FieldIsShip(x - 1, y + 1)
+                   || FieldIsShip(x, y - 1)
+                   || FieldIsShip(x, y + 0)
+                   || FieldIsShip(x, y + 1)
+                   || FieldIsShip(x + 1, y - 1)
+                   || FieldIsShip(x + 1, y + 0)
+                   || FieldIsShip(x + 1, y + 1);
         }
 
 
