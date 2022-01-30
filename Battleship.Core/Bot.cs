@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Battleship.Core
 {
     public class Bot
     {
         private static readonly Random _random = new();
+        private readonly HashSet<Position> _positions = new();
 
         public Board MakeStartingBoard()
         {
@@ -29,9 +31,14 @@ namespace Battleship.Core
 
         public Position GetPositionToFireAt()
         {
-            var x = _random.Next(GameConstraint.BoardSize);
-            var y = _random.Next(GameConstraint.BoardSize);
-            var position = new Position(x, y);
+            if (_positions.Count == GameConstraint.BoardSize * GameConstraint.BoardSize) throw new InvalidOperationException();
+
+            Position position;
+            do
+            {
+                position = MakeRandomPosition();
+            } while (!_positions.Add(position));
+
             return position;
         }
 
@@ -50,9 +57,7 @@ namespace Battleship.Core
             {
                 var orientation = _random.Next(2) == 1 ? Orientation.Horizontal : Orientation.Vertical;
                 var ship = Ship.MakeShip(classOfShip, orientation);
-                var x = _random.Next(0, GameConstraint.BoardSize);
-                var y = _random.Next(0, GameConstraint.BoardSize);
-                var position = new Position(x, y);
+                var position = MakeRandomPosition();
 
                 if (!board.CanAddShip(ship, position)) continue;
                 board.AddShip(ship, position);
@@ -60,6 +65,14 @@ namespace Battleship.Core
             }
 
             throw new InvalidOperationException();
+        }
+
+        private static Position MakeRandomPosition()
+        {
+            var x = _random.Next(GameConstraint.BoardSize);
+            var y = _random.Next(GameConstraint.BoardSize);
+            var position = new Position(x, y);
+            return position;
         }
     }
 }

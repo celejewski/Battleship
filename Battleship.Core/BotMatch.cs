@@ -2,15 +2,18 @@
 {
     public class BotMatch
     {
-        private static readonly Bot _bot = new();
+        private readonly Bot _leftBot;
+        private readonly Bot _rightBot;
         public GameState GameState { get; }
 
         public BotMatch()
         {
+            _leftBot = new();
+            _rightBot = new();
             GameState = new GameState
             {
-                BoardLeft = _bot.MakeStartingBoard(),
-                BoardRight = _bot.MakeStartingBoard(),
+                BoardLeft = _leftBot.MakeStartingBoard(),
+                BoardRight = _rightBot.MakeStartingBoard(),
                 ActivePlayer = Player.Left
             };
         }
@@ -40,7 +43,9 @@
 
         private PlayerAction PlayerAction(Player player)
         {
-            var position = _bot.GetPositionToFireAt();
+            var position = player == Player.Left
+                ? _leftBot.GetPositionToFireAt()
+                : _rightBot.GetPositionToFireAt();
 
             var board = player == Player.Left ? GameState.BoardRight : GameState.BoardLeft;
             board.Fire(position);
@@ -48,13 +53,13 @@
                 ? Outcome.Miss
                 : Outcome.Hit;
 
-            var logAction = new PlayerAction
+            var playerAction = new PlayerAction
             {
                 Player = player,
                 Position = position,
                 Outcome = outcome
             };
-            return logAction;
+            return playerAction;
         }
     }
 }
