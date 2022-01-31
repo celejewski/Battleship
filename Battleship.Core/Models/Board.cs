@@ -167,7 +167,7 @@ namespace Battleship.Core.Models
         /// Can be usued only after all ships has been placed.
         /// </summary>
         /// <returns></returns>
-        public bool AreAllShipsSunken()
+        public bool AreAllShipsSunk()
         {
             EnsureAllShipsArePlaced();
 

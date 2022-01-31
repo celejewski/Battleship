@@ -1,5 +1,6 @@
 ﻿using Battleship.Core.Dtos;
 using Battleship.Core.Enums;
+using System;
 
 namespace Battleship.Core.Models
 {
@@ -26,6 +27,12 @@ namespace Battleship.Core.Models
         /// <returns>Summary of what happened during this turn</returns>
         public TurnSummary Turn()
         {
+            if (GetMatchStatus() != MatchStatus.Running)
+            {
+                var message = "Game has already finished.";
+                throw new InvalidOperationException(message);
+            }
+
             var leftPlayerAction = PlayerAction(Player.Left);
             var rightPlayerAction = PlayerAction(Player.Right);
             var matchStatus = GetMatchStatus();
@@ -37,8 +44,8 @@ namespace Battleship.Core.Models
 
         public MatchStatus GetMatchStatus()
         {
-            var leftKilled = _leftBoard.AreAllShipsSunken();
-            var rightKilled = _rightBoard.AreAllShipsSunken();
+            var leftKilled = _leftBoard.AreAllShipsSunk();
+            var rightKilled = _rightBoard.AreAllShipsSunk();
 
             if (leftKilled && rightKilled) return MatchStatus.Draw;
             if (leftKilled) return MatchStatus.RightWon;
